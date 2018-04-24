@@ -5,6 +5,32 @@ Compile the program and run it:
 gcc cpu_sgx_info.c -o cpu_sgx_info
 ```
 
+## Attacks
+
+### Timing attacks
+
+### Blind Fuzzing
+
+### Cache attacks
+
+#### SgxPectre
+
+See: https://web.cse.ohio-state.edu/~zhang.834/papers/SgxPectre.pdf
+
+## Other hardware related attacks
+
+### Meltdown: 
+See: https://meltdownattack.com/meltdown.pdf
+
+### Spectre (Speculative execution)
+See: https://spectreattack.com/spectre.pdf
+
+The Spectre attack breaks the isolation between different applications, allowing to leak information from the kernel to user programs, as well as from virtualization hypervisors to guest systems.
+
+- https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
+- https://software.intel.com/sites/default/files/managed/c5/63/336996-Speculative-Execution-Side-Channel-Mitigations.pdf
+- https://access.redhat.com/security/vulnerabilities/speculativeexecution
+
 ## Resources
 
 - https://en.wikipedia.org/wiki/CPUID
