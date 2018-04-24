@@ -13,3 +13,5 @@ gcc cpu_sgx_info.c -o cpu_sgx_info
 - https://www.quora.com/Whats-the-difference-between-ARM-and-x86-processors
 - https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/risccisc/
 - https://www.felixcloutier.com/x86/CPUID.html
+- https://github.com/intel/linux-sgx
+- https://insujang.github.io/2017-04-14/intel-sgx-sdk-functions-for-enclave-creation/
