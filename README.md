@@ -16,6 +16,7 @@ gcc cpu_sgx_info.c -o cpu_sgx_info
 - https://github.com/intel/linux-sgx
 - https://insujang.github.io/2017-04-14/intel-sgx-sdk-functions-for-enclave-creation/
 - https://software.intel.com/en-us/sgx
+- https://software.intel.com/en-us/sgx/code-samples
 - https://software.intel.com/sites/default/files/332680-002.pdf
 - https://eprint.iacr.org/2016/086.pdf
 - https://software.intel.com/sites/default/files/managed/ae/48/Software-Guard-Extensions-Enclave-Writers-Guide.pdf
