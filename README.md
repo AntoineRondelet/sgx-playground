@@ -14,18 +14,23 @@ gcc cpu_sgx_info.c -o cpu_sgx_info
 ### Cache attacks
 
 #### SgxPectre
-
 See: https://web.cse.ohio-state.edu/~zhang.834/papers/SgxPectre.pdf
+
+> When branch prediction of the enclave code can be influenced by programs outside the enclave, the control flow of the enclave program can be temporarily altered to execute instructions that lead to observable cache-state changes. An adversary observing such changes can learn secrets inside the enclave memory or its internal registers, thus completely defeating the confidentiality guarantee offered by SGX.
 
 ## Other hardware related attacks
 
 ### Meltdown: 
 See: https://meltdownattack.com/meltdown.pdf
 
+> Meltdown exploits side effects of out-of-order execution on modern processors to read arbitrary kernel-memory locations including personal data and passwords.
+
 ### Spectre (Speculative execution)
 See: https://spectreattack.com/spectre.pdf
 
-The Spectre attack breaks the isolation between different applications, allowing to leak information from the kernel to user programs, as well as from virtualization hypervisors to guest systems.
+> Speculative logic is unfaithful in how it executes, can access to the victim’s memory and registers, and can perform operations with measurable side effects.
+
+> Spectre attacks involve inducing a victim to speculatively perform operations that would not occur during correct program execution and which leak the victim’s confidential information via a side channel to the adversary.
 
 - https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
 - https://software.intel.com/sites/default/files/managed/c5/63/336996-Speculative-Execution-Side-Channel-Mitigations.pdf
