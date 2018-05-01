@@ -117,8 +117,6 @@ The author private key is used to sign the enclave. **Securing the enclave signi
 
 **Note:** Data can be sealed to the current enclave (by using the enclave measurement `MRENCLAVE`), or it can be sealed to the enclave author (using the author identity `MRSIGNER`). Sealing to the enclave author allows for the enclave to be updated and keep access to the sealed data, and allows enclaves from the same author to share sealed data.
 
-
-
 ## Resources
 
 - [Resource Efficient Mining (REM)](https://www.usenix.org/system/files/conference/usenixsecurity17/sec17-zhang.pdf)
