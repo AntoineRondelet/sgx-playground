@@ -66,6 +66,50 @@ However, **enclave code is loaded in a special way** such that once the enclave 
 **Attestation:** Demonstrating to other entities that a particular environment was instantiated in the correct manner.
 **Sealing:** Enabling data belonging to the trusted environment to be bound to it such that it can be restored only when the trusted environment is restored.
 
+The enclave signature contains information that allows the Intel SGX architecture to detect whether any portion of the enclave has been tampered with. This allows an enclave to prove that it has been loaded in EPC correctly and it can be trusted.
+The hardware only verifies the enclave measurement when an enclave is loaded.
+
+**Structure of an enclave signature:**
+- Enclave measurement: A 256-bit hash that identifies the code and initial data to be placed inside the enclave.
+- The enclave author's public key: Used to identify the enclave author
+- The security version number of the enclave
+- The product ID of the enclave
+
+The author private key is used to sign the enclave. **Securing the enclave signing key is critical**
+
+#### Attestation
+
+- Attestation is the mechanism by which a third entity establishes that a software entity is running on a SGX enabled platform protected within an enclave prior to provisioning that software with secret and encrypted data.
+- The attestation mechanism is here to ensure a party that he is communicating with a real hardware enclave and not some software emulation.
+
+##### Local attestation (uses "report")
+
+- Used in the case where application developers want to write enclaves which can co-operate with one another to perform some higher-level function.
+- An enclave can ask the hardware to generate a **report** (a credential) which contains a cryptographic proof that the enclave exists on the platform.
+- The report can be given to another enclave which can verify that the enclave report was **generated on the same platform**. To do so, a symmetric key system is used where only the enclave hardware creating the report know the key.
+
+##### Remote attestation (uses "quote")
+
+- Used in the case of inter-platform communications.
+- An application that hosts an enclave can also ask the enclave to produce a report and then pass this report to a platform service to produce a type of credential that reflects enclave and platform state. This credential is known as **quote.**
+- This quote can then be passed to entities off of the platform, and verified using techniques for Intel® EPID signature verification(EPID stands for Enhanced Privacy ID)
+- **The CPU key is never directly exposed outside the platform.**
+- The use of Intel EPID allows to preserve privacy of the signer, by using a group signature scheme.
+- Each signer in a group has their own private key for signing, but **verifiers use the same group public key** to verify individual signatures. Therefore, users cannot be uniquely identified if signing two transactions with the same party because a **verifier cannot detect which member of the group signed a quote.**
+- The group here is a group of SGX enabled platforms.
+- In order to produce "quotes", Intel uses a "Quoting Enclave" (QE). It is the QE that signs measurements using the Intel EPID key (a device specific asymmetric key).
+
+#### Secret Provisioning
+
+- A remote entity may provision some secrets to an enclave after remote attestation has been accomplished.
+- It is important to establishii secure channel with the remote enclave **AFTER** the remote attestation has been accomplished, in order to make sure that we share secrets with the good enclave (the one that has been attested).
+- The verifier must also check the enclave attributes to prevent provisioning any secret to a debug enclave, for instance.
+- The verifier of the remote attestation must check the identity of the signer (MRSIGNER) before provisioning any secrets. 
+
+**Note:** Data provisioned to a debug enclave is not secret. A debug enclave’s memory is not protected by the hardware.
+
+#### Sealing
+
 
 
 ## Resources
