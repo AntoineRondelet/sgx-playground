@@ -62,14 +62,15 @@ However, **enclave code is loaded in a special way** such that once the enclave 
 
 #### Enclave signature
 
-**Measurement:** As an enclave is instantiated in a trusted environment, an accurate and protected recording of its identity is taken.
-**Attestation:** Demonstrating to other entities that a particular environment was instantiated in the correct manner.
-**Sealing:** Enabling data belonging to the trusted environment to be bound to it such that it can be restored only when the trusted environment is restored.
+- **Measurement:** As an enclave is instantiated in a trusted environment, an accurate and protected recording of its identity is taken.
+- **Attestation:** Demonstrating to other entities that a particular environment was instantiated in the correct manner.
+- **Sealing:** Enabling data belonging to the trusted environment to be bound to it such that it can be restored only when the trusted environment is restored.
 
 The enclave signature contains information that allows the Intel SGX architecture to detect whether any portion of the enclave has been tampered with. This allows an enclave to prove that it has been loaded in EPC correctly and it can be trusted.
 The hardware only verifies the enclave measurement when an enclave is loaded.
 
-**Structure of an enclave signature:**
+##### Structure of an enclave signature
+
 - Enclave measurement: A 256-bit hash that identifies the code and initial data to be placed inside the enclave.
 - The enclave author's public key: Used to identify the enclave author
 - The security version number of the enclave
@@ -109,6 +110,12 @@ The author private key is used to sign the enclave. **Securing the enclave signi
 **Note:** Data provisioned to a debug enclave is not secret. A debug enclave’s memory is not protected by the hardware.
 
 #### Sealing
+
+- Allow to preserve enclave's data/state that is considered secret, across events where the enclave is destroyed.
+- The secrets provisioned to an enclave are lost when the enclave is closed.
+- Secrets that need to be preserved have to be stored outside the enclave boundary, encrypted by a key unique to that enclave. We say that the data is "sealed", and can be "unsealed" by the same enclave later on.
+
+**Note:** Data can be sealed to the current enclave (by using the enclave measurement `MRENCLAVE`), or it can be sealed to the enclave author (using the author identity `MRSIGNER`). Sealing to the enclave author allows for the enclave to be updated and keep access to the sealed data, and allows enclaves from the same author to share sealed data.
 
 
 
