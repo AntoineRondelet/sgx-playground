@@ -5,6 +5,32 @@ Compile the program and run it:
 gcc cpu_sgx_info.c -o cpu_sgx_info
 ```
 
+## Enclave development
+
+### Prerequisites
+
+- The CPU must support Intel SGX instructions
+- The BIOS must support Intel SGX, and SGX must be enabled
+- The SGX PSW (Platform Software) must be installed
+
+1. Go on: https://01.org/intel-software-guard-extensions/downloads, and download the SGX installers for your OS.
+2. Install the SGX driver, the SDK and the PSW (the commands below are for Ubuntu)
+```bash
+mkdir ./sgx-binaries && cd ./sgx-binaries
+wget https://download.01.org/intel-sgx/linux-2.1.2/ubuntu64-desktop/sgx_linux_x64_driver_1bf506e.bin
+wget https://download.01.org/intel-sgx/linux-2.1.2/ubuntu64-desktop/sgx_linux_x64_psw_2.1.102.43402.bin
+wget https://download.01.org/intel-sgx/linux-2.1.2/ubuntu64-desktop/sgx_linux_x64_sdk_2.1.102.43402.bin
+
+chmod +x ./*.bin
+sudo ./sgx_linux_x64_driver_1bf506e.bin
+./sgx_linux_x64_psw_2.1.102.43402.bin
+sudo ./sgx_linux_x64_sdk_2.1.102.43402.bin
+
+HERE=$(pwd)
+source $HERE/sgxsdk/environment
+```
+3. If you want to test enclave code, you can test with the code samples from the [linux-sgx](https://github.com/intel/linux-sgx.git) github repo.
+
 ## Attacks
 
 ### Timing attacks
