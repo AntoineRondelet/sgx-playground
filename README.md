@@ -9,12 +9,15 @@ gcc cpu_sgx_info.c -o cpu_sgx_info
 
 ### Prerequisites
 
+See: https://github.com/intel/linux-sgx.git
+
+In order to use Intel SGX:
 - The CPU must support Intel SGX instructions
 - The BIOS must support Intel SGX, and SGX must be enabled
 - The SGX PSW (Platform Software) must be installed
 
 1. Go on: https://01.org/intel-software-guard-extensions/downloads, and download the SGX installers for your OS.
-2. Install the SGX driver, the SDK and the PSW (the commands below are for Ubuntu)
+2. Install the SGX driver, the SDK and the PSW (the commands below are for Ubuntu Desktop 64bit)
 ```bash
 mkdir ./sgx-binaries && cd ./sgx-binaries
 wget https://download.01.org/intel-sgx/linux-2.1.2/ubuntu64-desktop/sgx_linux_x64_driver_1bf506e.bin
@@ -69,7 +72,6 @@ See: https://spectreattack.com/spectre.pdf
 - https://recon.cx/2017/montreal/resources/slides/RECON-MTL-2017-SGX_Enclave_Programming-Common%20Mistakes.pdf
 - https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/risccisc/
 - https://www.felixcloutier.com/x86/CPUID.html
-- https://github.com/intel/linux-sgx
 - https://insujang.github.io/2017-04-14/intel-sgx-sdk-functions-for-enclave-creation/
 - https://software.intel.com/en-us/sgx
 - https://software.intel.com/sites/default/files/332680-002.pdf
