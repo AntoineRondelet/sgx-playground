@@ -97,3 +97,4 @@ See: https://spectreattack.com/spectre.pdf
 - https://eprint.iacr.org/2016/086.pdf
 - https://software.intel.com/sites/default/files/managed/ae/48/Software-Guard-Extensions-Enclave-Writers-Guide.pdf
 - https://www.blackhat.com/docs/us-16/materials/us-16-Aumasson-SGX-Secure-Enclaves-In-Practice-Security-And-Crypto-Review-wp.pdf
+- https://github.com/google/prochlo/tree/master/prochlo_stash_shuffler
