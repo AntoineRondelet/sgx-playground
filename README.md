@@ -34,6 +34,25 @@ source $HERE/sgxsdk/environment
 ```
 3. If you want to test enclave code, you can test with the code samples from the [linux-sgx](https://github.com/intel/linux-sgx.git) github repo.
 
+### Architecture of an enclave application
+
+- **Untrusted** part: Starts the enclave, and interacts with the "outside world"
+- **Trusted** part: Executes trusted code, and uses secrets
+
+The **untrusted** code can do calls to the **trusted** code by using the `ECALL` instruction.
+Similarly, the **trusted** code can return a result to the **untrusted** code by using the `OCALL` instruction.
+
+### Makefile
+
+Here are a few explanations about common instructions seen in Makefiles used to compile enclaves programs:
+1. Locate the SGX SDK: `SGX_SDK ?= /opt/intel/sgxsdk` sets the `SGX_SDK` environment variable to `/opt/intel/sgxsdk` if this environment variable does not exists (does not have any value).
+2. Define the architecture: `SGX_ARCH ?= x64`
+3. Define the SGX Mode you want to use: `SGX_MODE ?= [MODE]`. If we set`[MODE]` to `HW`, then we get a hardware enclave. In order to run a SGX simulation, we can set `[MODE]` to `SIM`.
+4. Set the configuration modes: `SGX_DEBUG = 1` activates the debug mode, and enables the macro `DEBUG`. `SGX_PRERELEASE = 1` activates the prerelease mode, and enables the macros `NDEBUG` and `EDEBUG`. Finally, `SGX_RELEASE = 1` activates the release mode, and enables the `NDEBUG` macro.
+5. Locate the libraries: `SGX_LIBRARY_PATH := $(SGX_SDK)/lib64`
+Here is a reminder about [linux libraries](http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html) (`.a` and `.so` files)
+6. Define the include path to the sdk files to include during compilation: `INCLUDE_PATH := -I$(SGX_SDK)/include`
+
 ## Attacks
 
 ### Timing attacks
