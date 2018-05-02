@@ -9,8 +9,8 @@ gcc cpu_sgx_info.c -o cpu_sgx_info
 
 ### Prerequisites
 
-See: https://github.com/intel/linux-sgx.git
-For a full reference on how to use SGX on Linux, see: https://download.01.org/intel-sgx/linux-2.1/docs/Intel_SGX_Developer_Reference_Linux_2.1_Open_Source.pdf
+- See: https://github.com/intel/linux-sgx.git
+- For a full reference on how to use SGX on Linux, see the [Intel SGX Developer Reference](https://download.01.org/intel-sgx/linux-2.1/docs/Intel_SGX_Developer_Reference_Linux_2.1_Open_Source.pdf)
 
 In order to use Intel SGX:
 - The CPU must support Intel SGX instructions
