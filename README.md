@@ -53,6 +53,8 @@ Here are a few explanations about common instructions seen in Makefiles used to 
 Here is a reminder about [linux libraries](http://www.yolinux.com/TUTORIALS/LibraryArchives-StaticAndDynamic.html) (`.a` and `.so` files)
 6. Define the include path to the sdk files to include during compilation: `INCLUDE_PATH := -I$(SGX_SDK)/include`
 
+**Note:** Files from the include folder of the SDK contain instructions with placeholders for compiler or system extensions to the language. See https://stackoverflow.com/questions/34495206/whats-a-macro-before-a-function-or-a-class-in-c for more details.
+
 ## Attacks
 
 ### Timing attacks
