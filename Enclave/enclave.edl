@@ -12,7 +12,7 @@ enclave {
          * They are the "trusted" functions, running in the SGX enclave
          */
         public int generate_random_number(void);
-        public int increment(int a, int b);
+        public int addition(int a, int b);
     };
 
     untrusted {
