@@ -61,6 +61,27 @@ Here is a reminder about [linux libraries](http://www.yolinux.com/TUTORIALS/Libr
 readelf -s $SGX_LIBRARY_PATH/libsgx_urts.so
 ```
 
+### Tooling
+
+- **Edger8r:** Generates the interfaces between the untrusted components and enclaves.
+edger8r takes the `.edl` file as an argument and generates the pairs of `_t` and `_u` files referring to the trusted and untrusted
+proxies and bridges. Trusted proxies correspond to OCALLs (called by the enclave), and untrusted proxy functions correspond to ECALLs (called by the application).
+- **Signing tool:** Generates and adds enclave metadata to the enclave image (the enclave signature is included into the metadata).
+Once an enclave is signed, any modifications to the enclave file can be detected.
+The signing tool (`sgx_sign`) takes the enclave configuration file (XML file) as an input to create the signature and metadata of the enclave (see p60 of the [intel documentation](https://download.01.org/intel-sgx/linux-2.1/docs/Intel_SGX_Developer_Reference_Linux_2.1_Open_Source.pdf))
+
+### Enclave development process
+
+1. Define the interface between the untrusted application and the enclave in the EDL file (see p37 of the [intel documentation](https://download.01.org/intel-sgx/linux-2.1/docs/Intel_SGX_Developer_Reference_Linux_2.1_Open_Source.pdf))
+2. Implement the application logic and the enclave functions
+3. Build the project (app and enclave), by using the edger8r and signing tools
+4. Run the project
+
+**Note:** In order to generate a key for the enclave, run:
+```bash
+openssl genpkey -out enclave_private.pem -algorithm rsa -outform PEM -pkeyopt rsa_keygen_bits:3072 -pkeyopt rsa_keygen_pubexp:3
+```
+
 ## Attacks
 
 ### Timing attacks
