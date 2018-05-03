@@ -1,9 +1,12 @@
 # SGX Playground
 
-Compile the program and run it:
+In order to inspect the properties of you CPU and see if it supports SGX, run:
 ```bash
 gcc cpu_sgx_info.c -o cpu_sgx_info
+./cpu_sgx_info
 ```
+
+Or go directly check here: https://github.com/ayeks/SGX-hardware
 
 ## Enclave development
 
