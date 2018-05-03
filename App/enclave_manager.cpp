@@ -1,12 +1,12 @@
 #include <cstdio>
 #include <cstring>
+#include "sgx_urts.h"
 #include "enclave_manager.h"
 /**
  * If we look at the include folder of the sgx sdk, sgx_urts.h is the file that
  * contains the declarations of the functions "sgx_create_enclave" and "sgx_destroy_enclave"
  * Note: This file is linked at compilation time
  */
-#include "sgx_urts.h"
 
 #ifndef TRUE
 #define TRUE 1
@@ -21,7 +21,7 @@ void print_error_message(sgx_status_t status) {
     printf("SGX error code: %d\n", status);
 }
 
-int initialize_enclave(sgx_enclave_id_t* enclave_id, const std::string& launch_token_path, const std::string& enclave_file) {
+int init_enclave(sgx_enclave_id_t* enclave_id, const std::string& launch_token_path, const std::string& enclave_file) {
     /**
      * To create an enclave, we call the function "sgx_create_enclave"
      * sgx_create_enclave(
