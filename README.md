@@ -73,14 +73,17 @@ The signing tool (`sgx_sign`) takes the enclave configuration file (XML file) as
 ### Enclave development process
 
 1. Define the interface between the untrusted application and the enclave in the EDL file (see p37 of the [intel documentation](https://download.01.org/intel-sgx/linux-2.1/docs/Intel_SGX_Developer_Reference_Linux_2.1_Open_Source.pdf))
-2. Implement the application logic and the enclave functions
-3. Build the project (app and enclave), by using the edger8r and signing tools
-4. Run the project
+The enclave EDL represents the interafce between trusted and untrusted execution environments. The EDL file is [here](https://github.com/AntoineRondelet/sgx-playground/blob/master/Enclave/enclave.edl)
+2. Implement the application logic and the enclave functions (See the cpp files [enclave.cpp](https://github.com/AntoineRondelet/sgx-playground/blob/master/Enclave/enclave.cpp) for the enclave and [app_core](https://github.com/AntoineRondelet/sgx-playground/blob/master/App/app_core.cpp), and [enclave_manager.cpp](https://github.com/AntoineRondelet/sgx-playground/blob/master/App/enclave_manager.cpp) for the untrusted part of the application)
+3. Build the project (app and enclave), by using the edger8r and signing tools. In order to build the test application, run: `make`. The Makefile takes cares to use the `edger8r` and `sgx_sign` tools in order to generate the `*_u.h`, `*_u.c` files representing the interface for doing ECALLs, and the `*_t.h` and `*_t.c` files used by the enclave to communicate with the untrusted environment of the appliaction (OCALLs).
+4. Run the project, by executing the compiled binary resulting from the compilation.
 
-**Note:** In order to generate a key for the enclave, run:
+**Note1:** In order to generate a key for the enclave, run:
 ```bash
 openssl genpkey -out enclave_private.pem -algorithm rsa -outform PEM -pkeyopt rsa_keygen_bits:3072 -pkeyopt rsa_keygen_pubexp:3
 ```
+
+**Note2:** If you want to run the program on the hardware mode (set `SGX_MODE=HW`), then, depending on your OS, a problem might occur when you launch the executable. Make sure to have `libprotobuf.so.9` somewhere in your libraries. (You can install it by having a look [here](https://altlinux.pkgs.org/sisyphus/classic-x86_64/libprotobuf-compat9-2.6.1-alt2.x86_64.rpm.html))
 
 ## Attacks
 
