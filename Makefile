@@ -32,7 +32,7 @@
 ######## SGX SDK Settings ########
 
 SGX_SDK ?= /opt/intel/sgxsdk
-SGX_MODE ?= HW
+SGX_MODE ?= SIM
 SGX_ARCH ?= x64
 
 ifeq ($(shell getconf LONG_BIT), 32)
@@ -56,8 +56,8 @@ else
 endif
 
 ifeq ($(SGX_DEBUG), 1)
-	ifeq ($(SGX_PRERELEASE), 1)
-	$(error Cannot set SGX_DEBUG and SGX_PRERELEASE at the same time!!)
+ifeq ($(SGX_PRERELEASE), 1)
+$(error Cannot set SGX_DEBUG and SGX_PRERELEASE at the same time!!)
 endif
 endif
 
@@ -156,7 +156,7 @@ all: $(App_Name) $(Enclave_Name)
 	@echo "You can also sign the enclave using an external signing tool. See User's Guide for more details."
 	@echo "To build the project in simulation mode set SGX_MODE=SIM. To build the project in prerelease mode set SGX_PRERELEASE=1 and SGX_MODE=HW."
 else
-	all: $(App_Name) $(Signed_Enclave_Name)
+all: $(App_Name) $(Signed_Enclave_Name)
 endif
 
 run: all
@@ -203,7 +203,7 @@ $(Enclave_Name): Enclave/enclave_t.o $(Enclave_Cpp_Objects)
 	@echo "LINK =>  $@"
 
 $(Signed_Enclave_Name): $(Enclave_Name)
-	@$(SGX_ENCLAVE_SIGNER) sign -key Enclave/Enclave_private.pem -enclave $(Enclave_Name) -out $@ -config $(Enclave_Config_File)
+	@$(SGX_ENCLAVE_SIGNER) sign -key Enclave/enclave_private.pem -enclave $(Enclave_Name) -out $@ -config $(Enclave_Config_File)
 	@echo "SIGN =>  $@"
 
 .PHONY: clean
