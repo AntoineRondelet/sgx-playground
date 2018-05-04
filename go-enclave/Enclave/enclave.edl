@@ -1,0 +1,27 @@
+enclave {
+    trusted {
+        /**
+         * ECALLs (untrustedApp -> trustedEnclave)
+         * -> The call is made from the untrusted app
+         * -> The execution is done in the trusted enclave
+         * (function logic implemented in the Enclave folder)
+         * The functions defined in the trusted block
+         * are the functions that are implemented in the enclave
+         * They are the "trusted" functions, running in the SGX enclave
+         */
+        public int addition(int a, int b);
+    };
+
+    untrusted {
+        /**
+         * OCALLs (trustedEnclave -> untrustedApp)
+         * -> The call is made from the trusted enclave
+         * -> The execution is done in the untrusted app
+         * (function logic implemented in the App folder)
+         * The functions defined in the untrusted block
+         * are the functions that are implemented in the untrusted
+         * application.
+         */
+        void ocall_print([in, string]const char* str);
+    };
+};
