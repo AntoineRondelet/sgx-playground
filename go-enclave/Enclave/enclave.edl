@@ -1,4 +1,5 @@
 enclave {
+
     trusted {
         /**
          * ECALLs (untrustedApp -> trustedEnclave)
@@ -9,7 +10,8 @@ enclave {
          * are the functions that are implemented in the enclave
          * They are the "trusted" functions, running in the SGX enclave
          */
-        public int addition(int a, int b);
+        public int test(int a, int b);
+        //public int Addition(int a, int b);
     };
 
     untrusted {

@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
      * The addition function from the enclave calls a go function
      */
     printf("Value of the result_addition variable BEFORE call to enclave: %d\n", result_addition);
-    sgx_status_t status = addition(enclave_id, &result_addition, first_term, second_term);
+    sgx_status_t status = test(enclave_id, &result_addition, first_term, second_term);
     if (status != SGX_SUCCESS) {
         std::cout << "The addition call in the enclave failed" << std::endl;
     }

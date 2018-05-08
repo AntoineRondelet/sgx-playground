@@ -53,6 +53,7 @@ else
 	SGX_COMMON_CFLAGS := -m64
 	SGX_LIBRARY_PATH := $(SGX_SDK)/lib64
 	SGX_GOLANG_LIBRARY_PATH := $(SGX_REPO)/go-enclave/Enclave/go-lib # path to golang c-shared lib
+	SGX_GOLANG_INCLUDE_PATH := $(SGX_REPO)/go-enclave/Enclave/go-include # path to .h files generated from golang by cgo
 	SGX_ENCLAVE_SIGNER := $(SGX_SDK)/bin/x64/sgx_sign
 	SGX_EDGER8R := $(SGX_SDK)/bin/x64/sgx_edger8r
 endif
@@ -121,7 +122,7 @@ Crypto_Library_Name := sgx_tcrypto
 # Enclave_Cpp_Files := Enclave/Enclave.cpp $(wildcard Enclave/Edger8rSyntax/*.cpp) $(wildcard Enclave/TrustedLibrary/*.cpp)
 Enclave_Cpp_Files := Enclave/enclave.cpp
 # Enclave_Include_Paths := -IInclude -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport
-Enclave_Include_Paths := -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport
+Enclave_Include_Paths := -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport -I$(SGX_GOLANG_INCLUDE_PATH)
 
 Enclave_C_Flags := $(SGX_COMMON_CFLAGS) -nostdinc -fvisibility=hidden -fpie -fstack-protector $(Enclave_Include_Paths)
 Enclave_Cpp_Flags := $(Enclave_C_Flags) -std=c++03 -nostdinc++
@@ -202,7 +203,7 @@ IncludeFiles:
 	@echo "INCLUDE FILES"
 
 Enclave/enclave_t.c: IncludeFiles $(SGX_EDGER8R) Enclave/enclave.edl
-	@cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
+	@cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include --search-path $(SGX_GOLANG_INCLUDE_PATH)
 	@echo "GEN  =>  $@"
 
 Enclave/enclave_t.o: Enclave/enclave_t.c
