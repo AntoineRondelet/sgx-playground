@@ -34,6 +34,7 @@
 SGX_SDK ?= /opt/intel/sgxsdk
 SGX_MODE ?= SIM
 SGX_ARCH ?= x64
+SGX_REPO ?= . # Go in the root of the sgx playground repo and run: export SGX_REPO=$(pwd)
 
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
@@ -51,8 +52,7 @@ ifeq ($(SGX_ARCH), x86)
 else
 	SGX_COMMON_CFLAGS := -m64
 	SGX_LIBRARY_PATH := $(SGX_SDK)/lib64
-	SGX_GOLANG_LIBRARY_PATH := /home/user99/Documents/Antoine/sgx/go-enclave/Enclave/go-lib# shared lib
-	#SGX_GOLANG_LIBRARY_PATH := /home/user99/Documents/Antoine/sgx/go-enclave/Enclave/go-code/libcalc# c-archive lib
+	SGX_GOLANG_LIBRARY_PATH := $(SGX_REPO)/go-enclave/Enclave/go-lib # path to golang c-shared lib
 	SGX_ENCLAVE_SIGNER := $(SGX_SDK)/bin/x64/sgx_sign
 	SGX_EDGER8R := $(SGX_SDK)/bin/x64/sgx_edger8r
 endif
