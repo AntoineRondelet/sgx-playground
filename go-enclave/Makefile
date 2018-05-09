@@ -142,15 +142,14 @@ Enclave_Cpp_Flags := $(Enclave_C_Flags) -std=c++11 -nostdinc++
 #       Use `--start-group' and `--end-group' to link these libraries.
 # Do NOT move the libraries linked with `--start-group' and `--end-group' within `--whole-archive' and `--no-whole-archive' options.
 # Otherwise, you may get some undesirable errors.
-Enclave_Link_Flags := $(SGX_COMMON_CFLAGS) \
-	-L$(SGX_GOLANG_LIBRARY_PATH) -lcalc \
-	-Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L$(SGX_LIBRARY_PATH) \
+Enclave_Link_Flags := $(SGX_COMMON_CFLAGS) -Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L$(SGX_LIBRARY_PATH) \
 	-Wl,--whole-archive -l$(Trts_Library_Name) -Wl,--no-whole-archive \
 	-Wl,--start-group -lsgx_tstdc -lsgx_tcxx -l$(Crypto_Library_Name) -l$(Service_Library_Name) -Wl,--end-group \
 	-Wl,-Bstatic -Wl,-Bsymbolic -Wl,--no-undefined \
 	-Wl,-pie,-eenclave_entry -Wl,--export-dynamic  \
 	-Wl,--defsym,__ImageBase=0
-	-Wl,--version-script=$(Enclave_Version_Script)
+	 #-Wl,--version-script=$(Enclave_Version_Script)
+	 #-L$(SGX_GOLANG_LIBRARY_PATH) -lcalc
 
 Enclave_Cpp_Objects := $(Enclave_Cpp_Files:.cpp=.o)
 
@@ -207,6 +206,14 @@ ifneq ($(Build_Mode), HW_RELEASE)
 	@echo "RUN  =>  $(App_Name) [$(SGX_MODE)|$(SGX_ARCH), OK]"
 endif
 
+build-lib:
+	cd Enclave/go-code/libcalc && go build -buildmode=c-archive -o libcalc.a libcalc.go
+	echo "Built libraries"
+
+install-lib:
+	mv Enclave/go-code/libcalc/libcalc.a Enclave/go-lib && mv Enclave/go-code/libcalc/libcalc.h Enclave/go-include
+	echo "Installed libraries"
+
 ######## App Objects ########
 
 App/enclave_u.c: $(SGX_EDGER8R) Enclave/enclave.edl
@@ -235,7 +242,7 @@ IncludeFiles:
 	@cp Enclave/go-include/* Enclave
 	@echo "INCLUDE FILES"
 
-Enclave/enclave_t.c: IncludeFiles $(SGX_EDGER8R) Enclave/enclave.edl
+Enclave/enclave_t.c: $(SGX_EDGER8R) Enclave/enclave.edl
 	@cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include --search-path $(SGX_GOLANG_INCLUDE_PATH)
 	@echo "GEN  =>  $@"
 
@@ -243,11 +250,23 @@ Enclave/enclave_t.o: Enclave/enclave_t.c
 	@$(CC) $(Enclave_C_Flags) -c $< -o $@
 	@echo "CC   <=  $<"
 
+Enclave/_cgo_export.o: Enclave/_cgo_export.c
+	@$(CC) $(Enclave_C_Flags) -c $< -o $@
+	@echo "CC   <=  $<"
+
+Enclave/libcalc.cgo2.o: Enclave/libcalc.cgo2.c
+	@$(CC) $(Enclave_C_Flags) -c $< -o $@
+	@echo "CC   <=  $<"
+
+Enclave/_cgo_main.o: Enclave/_cgo_main.c
+	@$(CC) $(Enclave_C_Flags) -c $< -o $@
+	@echo "CC   <=  $<"
+
 Enclave/%.o: Enclave/%.cpp
 	@$(CXX) $(Enclave_Cpp_Flags) -c $< -o $@
 	@echo "CXX  <=  $<"
 
-$(Enclave_Name): Enclave/enclave_t.o $(Enclave_Cpp_Objects)
+$(Enclave_Name): Enclave/enclave_t.o Enclave/_cgo_export.o Enclave/_cgo_main.o Enclave/libcalc.cgo2.o $(Enclave_Cpp_Objects)
 	$(CXX) $^ -o $@ $(Enclave_Link_Flags)
 	@echo "LINK =>  $@"
 
@@ -258,4 +277,4 @@ $(Signed_Enclave_Name): $(Enclave_Name)
 .PHONY: clean
 
 clean:
-	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/enclave_u.* $(Enclave_Cpp_Objects) Enclave/enclave_t.* Enclave/*.a Enclave/*.so
+	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/enclave_u.* $(Enclave_Cpp_Objects) Enclave/enclave_t.* Enclave/*.a Enclave/*.so Enclave/go-lib/* Enclave/go-include/* Enclave/libcalc.h
