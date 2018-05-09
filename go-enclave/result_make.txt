@@ -1,0 +1,30 @@
+GEN  =>  App/enclave_u.c
+CC   <=  App/enclave_u.c
+CXX  <=  App/app_core.cpp
+CXX  <=  App/enclave_manager.cpp
+LINK =>  go_c_app
+GEN  =>  Enclave/enclave_t.c
+CC   <=  Enclave/enclave_t.c
+CC   <=  Enclave/_cgo_export.c
+CC   <=  Enclave/_cgo_main.c
+CC   <=  Enclave/libcalc.cgo2.c
+CXX  <=  Enclave/enclave.cpp
+g++ Enclave/enclave_t.o Enclave/_cgo_export.o Enclave/_cgo_main.o Enclave/libcalc.cgo2.o Enclave/enclave.o -o enclave.so -m64 -O0 -g -Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L/home/user99/Documents/Antoine/sgx-binaries/sgxsdk/lib64 -Wl,--whole-archive -lsgx_trts_sim -Wl,--no-whole-archive -Wl,--start-group -lsgx_tstdc -lsgx_tcxx -lsgx_tcrypto -lsgx_tservice_sim -Wl,--end-group -Wl,-Bstatic -Wl,-Bsymbolic -Wl,--no-undefined -Wl,-pie,-eenclave_entry -Wl,--export-dynamic -Wl,--defsym,__ImageBase=0
+LINK =>  enclave.so
+<EnclaveConfiguration>
+<ProdID>0</ProdID>
+<ISVSVN>0</ISVSVN>
+<StackMaxSize>0x50000</StackMaxSize>
+<HeapMaxSize>0x100000</HeapMaxSize>
+<!--TCS: Thread Control Structure-->
+<TCSNum>10</TCSNum>
+<TCSPolicy>1</TCSPolicy>
+<DisableDebug>0</DisableDebug>
+<MiscSelect>0</MiscSelect>
+<MiscMask>0xFFFFFFFF</MiscMask>
+</EnclaveConfiguration>
+tcs_num 10, tcs_max_num 10, tcs_min_pool 1
+The required memory is 4653056B.
+Succeed.
+SIGN =>  enclave.signed.so
+The project has been built in debug simulation mode.
