@@ -111,12 +111,12 @@ App_Name := go_c_app
 
 ######## Enclave Settings ########
 
-Enclave_Version_Script := Enclave/Enclave_debug.lds
+Enclave_Version_Script := Enclave/enclave_debug.lds
 ifeq ($(SGX_MODE), HW)
 ifneq ($(SGX_DEBUG), 1)
 ifneq ($(SGX_PRERELEASE), 1)
 	# Choose to use 'Enclave.lds' for HW release mode
-	Enclave_Version_Script = Enclave/Enclave.lds
+	Enclave_Version_Script = Enclave/enclave.lds
 endif
 endif
 endif
@@ -226,7 +226,7 @@ $(App_Name): App/enclave_u.o $(App_Cpp_Objects)
 	@echo "LINK =>  $@"
 
 .config_$(Build_Mode)_$(SGX_ARCH):
-	@rm -f .config_* $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
+	@rm -f .config_* $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/enclave_u.* $(Enclave_Cpp_Objects) Enclave/enclave_t.*
 	@touch .config_$(Build_Mode)_$(SGX_ARCH)
 
 ######## Enclave Objects ########
