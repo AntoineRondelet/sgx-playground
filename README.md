@@ -85,6 +85,14 @@ The enclave EDL represents the interafce between trusted and untrusted execution
 ```bash
 openssl genpkey -out enclave_private.pem -algorithm rsa -outform PEM -pkeyopt rsa_keygen_bits:3072 -pkeyopt rsa_keygen_pubexp:3
 ```
+Then you can generate the coresponding public key, by running:
+```bash
+openssl rsa -in enclave_private.pem -pubout > enclave_public.pub
+```
+And finally, you get check the modulus and the exponent of the public key by running:
+```bash
+openssl rsa -pubin -in enclave_public.pub -text -noout
+```
 
 **Note2:** If you want to run the program on the hardware mode (set `SGX_MODE=HW`), then, depending on your OS, a problem might occur when you launch the executable. Make sure to have `libprotobuf.so.9` somewhere in your libraries. (You can install it by having a look [here](https://altlinux.pkgs.org/sisyphus/classic-x86_64/libprotobuf-compat9-2.6.1-alt2.x86_64.rpm.html))
 
