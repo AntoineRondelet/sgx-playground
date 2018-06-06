@@ -4,9 +4,19 @@
 
 1. Run:
 ```bash
+# Fetch the binaries
 wget https://download.01.org/intel-sgx/linux-2.1.3/ubuntu64-desktop/sgx_linux_x64_driver_1bf506e.bin
 wget https://download.01.org/intel-sgx/linux-2.1.3/ubuntu64-desktop/sgx_linux_x64_psw_2.1.103.44322.bin
 wget https://download.01.org/intel-sgx/linux-2.1.3/ubuntu64-desktop/sgx_linux_x64_sdk_2.1.103.44322.bin
+
+# Install
+chmod +x sgx_linux_x64_driver_1bf506e.bin
+chmod +x sgx_linux_x64_psw_2.1.103.44322.bin
+chmod +x sgx_linux_x64_sdk_2.1.103.44322.bin
+
+./sgx_linux_x64_driver_1bf506e.bin
+./sgx_linux_x64_psw_2.1.103.44322.bin
+./sgx_linux_x64_sdk_2.1.103.44322.bin
 ```
 
 2. Clone the `rust-sgx-sdk` repo:
@@ -14,7 +24,7 @@ wget https://download.01.org/intel-sgx/linux-2.1.3/ubuntu64-desktop/sgx_linux_x6
 git clone https://github.com/baidu/rust-sgx-sdk.git
 ```
 
-**Note:** The following instructions have been taken from the `rust-sgx-sdk` repo.
+**Note:** The following instructions have been adapted from the `rust-sgx-sdk` repo.
 
 ## Docker - Dev
 
