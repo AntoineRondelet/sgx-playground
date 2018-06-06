@@ -1,0 +1,15 @@
+[package]
+name = "Helloworldsampleenclave"
+version = "0.9.8"
+authors = ["Baidu"]
+
+[lib]
+name = "helloworldsampleenclave"
+crate-type = ["staticlib"]
+
+[features]
+default = []
+
+[target.'cfg(not(target_env = "sgx"))'.dependencies]
+sgx_types = { path = "../../../sgx_types" }
+sgx_tstd = { path = "../../../sgx_tstd" }
