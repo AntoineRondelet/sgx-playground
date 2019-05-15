@@ -114,12 +114,12 @@ See: https://web.cse.ohio-state.edu/~zhang.834/papers/SgxPectre.pdf
 ## Other hardware related attacks
 
 ### Meltdown: 
-See: https://meltdownattack.com/meltdown.pdf
+See: https://meltdownattack.com
 
 > Meltdown exploits side effects of out-of-order execution on modern processors to read arbitrary kernel-memory locations including personal data and passwords.
 
-### Spectre (Speculative execution)
-See: https://spectreattack.com/spectre.pdf
+### Spectre (Speculative execution):
+See: https://spectreattack.com
 
 > Speculative logic is unfaithful in how it executes, can access to the victim’s memory and registers, and can perform operations with measurable side effects.
 
@@ -128,6 +128,15 @@ See: https://spectreattack.com/spectre.pdf
 - https://googleprojectzero.blogspot.co.uk/2018/01/reading-privileged-memory-with-side.html
 - https://software.intel.com/sites/default/files/managed/c5/63/336996-Speculative-Execution-Side-Channel-Mitigations.pdf
 - https://access.redhat.com/security/vulnerabilities/speculativeexecution
+
+### Foreshadow:
+See: https://foreshadowattack.eu/
+
+### RIDL and Fallout (MDS attacks):
+See: https://mdsattacks.com/
+
+### Zombieload:
+See: https://zombieloadattack.com/
 
 ## Resources
 
@@ -143,3 +152,4 @@ See: https://spectreattack.com/spectre.pdf
 - https://software.intel.com/sites/default/files/managed/ae/48/Software-Guard-Extensions-Enclave-Writers-Guide.pdf
 - https://www.blackhat.com/docs/us-16/materials/us-16-Aumasson-SGX-Secure-Enclaves-In-Practice-Security-And-Crypto-Review-wp.pdf
 - https://github.com/google/prochlo/tree/master/prochlo_stash_shuffler
+- https://cpu.fail/
